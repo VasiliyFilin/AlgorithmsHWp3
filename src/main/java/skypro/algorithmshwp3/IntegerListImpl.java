@@ -3,7 +3,7 @@ package skypro.algorithmshwp3;
 import java.util.Arrays;
 
 public class IntegerListImpl implements IntegerList{
-    private final Integer[] ints;
+    private Integer[] ints;
     private int size;
 
     public IntegerListImpl() {
@@ -67,7 +67,7 @@ public class IntegerListImpl implements IntegerList{
     @Override
     public boolean contains(Integer item) {
         Integer[] ints = toArray();
-        sort(ints);
+        quickSort(ints, ints[0], ints.length - 1);
         return binarySearch(ints, item);
     }
 
@@ -138,7 +138,7 @@ public class IntegerListImpl implements IntegerList{
     }
     private void checkSize(int size) {
         if (size == ints.length) {
-            throw new SizeOutOfBoundException();
+            ints = grow(ints);
         }
     }
     private void checkIndex (int index) {
@@ -177,5 +177,41 @@ public class IntegerListImpl implements IntegerList{
             }
         }
         return false;
+    }
+
+    private Integer[] grow(Integer[] ints) {
+        Integer[] destArray = new Integer[ints.length + size / 2];
+        System.arraycopy(ints, 0, destArray, 0, ints.length);
+        return destArray;
+    }
+    public void quickSort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+    }
+
+    private int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
+    private void swapElements(Integer[] arr, int left, int right) {
+        int temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
     }
 }
