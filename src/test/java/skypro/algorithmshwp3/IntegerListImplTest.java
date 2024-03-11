@@ -27,6 +27,9 @@ class IntegerListImplTest {
         act = out.add(50);
         exp = 50;
         assertEquals(exp, act);
+        act = out.add(60);
+        exp = 60;
+        assertEquals(exp, act);
     }
 
     @Test
@@ -142,11 +145,5 @@ class IntegerListImplTest {
     void shouldThrowNullArgumentExceptionTest() {
         out.clear();
         assertThrows(NullArgumentException.class, () -> out.add(null));
-    }
-
-    @Test
-    void shouldThrowSizeOutOfBoundExceptionTest() {
-        out.add(50);
-        assertThrows(SizeOutOfBoundException.class, () -> out.add(60));
     }
 }
