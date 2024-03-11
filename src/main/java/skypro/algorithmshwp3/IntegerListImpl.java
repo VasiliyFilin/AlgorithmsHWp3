@@ -67,7 +67,7 @@ public class IntegerListImpl implements IntegerList{
     @Override
     public boolean contains(Integer item) {
         Integer[] ints = toArray();
-        quickSort(ints, ints[0], ints.length);
+        quickSort(ints, ints[0], ints.length - 1);
         return binarySearch(ints, item);
     }
 
